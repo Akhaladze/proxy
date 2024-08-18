@@ -12,7 +12,9 @@ services:
       # - '21:21' # FTP
     networks:
       proxy-network:
+        ipv4_address: $IPV4_ADDRESS
     # Uncomment the next line if you uncomment anything in the section
+    env_file: stack.env
     environment:
       # Uncomment this if you want to change the location of
       # the SQLite DB file within the container
