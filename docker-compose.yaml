@@ -35,8 +35,8 @@ volumes:
   data:
   letsencrypt:
 networks:
-  default:
+  proxy-network:
     external: true
-    name: proxy-network
+    
 
 
