@@ -48,8 +48,9 @@ services:
       MARIADB_AUTO_UPGRADE: '1'
     volumes:
       - mysql:/var/lib/mysql
+    networks:
+      proxy-network:
     
-
 volumes:
   data:
   letsencrypt:
