@@ -19,21 +19,38 @@ services:
       # Uncomment this if you want to change the location of
       # the SQLite DB file within the container
       # DB_SQLITE_FILE: "/data/database.sqlite"
-
       # Uncomment this if IPv6 is not enabled on your host
       DISABLE_IPV6: 'true'
-
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: $DB_MYSQL_PASSWORD
+      DB_MYSQL_NAME: "npm"
+      # Uncomment this if IPv6 is not enabled on your host
+      # DISABLE_IPV6: 'true'
     volumes:
       - data:/data
       - letsencrypt:/etc/letsencrypt
-    healthcheck:
-      test: ["CMD", "/usr/bin/check-health"]
-      interval: 10s
-      timeout: 3s         
+    depends_on:
+      - db
+
+  db:
+    image: 'jc21/mariadb-aria:latest'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: $DB_MYSQL_PASSWORD
+      MARIADB_AUTO_UPGRADE: '1'
+    volumes:
+      - mysql:/var/lib/mysql
+    
 
 volumes:
   data:
   letsencrypt:
+  mysql:
 networks:
   proxy-network:
     external: true
