@@ -16,6 +16,7 @@ services:
     # Uncomment the next line if you uncomment anything in the section
     env_file: stack.env
     environment:
+      X_FRAME_OPTIONS: "sameorigin"
       # Uncomment this if you want to change the location of
       # the SQLite DB file within the container
       # DB_SQLITE_FILE: "/data/database.sqlite"
@@ -37,6 +38,8 @@ services:
   db:
     image: 'jc21/mariadb-aria:latest'
     restart: unless-stopped
+    env_file:
+      - stack.env
     environment:
       MYSQL_ROOT_PASSWORD: 'npm'
       MYSQL_DATABASE: 'npm'
